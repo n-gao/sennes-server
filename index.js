@@ -1,17 +1,21 @@
 const express = require('express');
 const app = express();
 
+// Default route
 app.get('/api', function(req, res) {
+    // Try to parse the request object
     let req_obj;
     try {
         req_obj = JSON.parse(req.query['request']);
     } catch (e){
+        // Catch errors
         res.send({
             error : 1,
             error_msg : 'Request object not provided or not in JSON format.'
         });
         return;
     }
+    // Determin method
     let method = req_obj.method;
     console.log(method);
     if (!(method in methods)) {
@@ -20,10 +24,12 @@ app.get('/api', function(req, res) {
             error_msg : 'No method specified or method not existing.'
         });
     } else {
+        // Call method
         methods[method](req_obj, res);
     }
 });
 
+// Dictionary containing all methods
 let methods = {
 
     'get_updates' : (req, res) => {
@@ -104,4 +110,5 @@ let methods = {
     }
 }
 
+// Start server at port 3000
 app.listen(3000);
