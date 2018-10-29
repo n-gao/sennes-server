@@ -1,12 +1,30 @@
 const express = require('express');
-const app = express();
+const WebSocket = require('ws');
 
-// Default route
+const app = express();
+const wss = new WebSocket.Server({ port: 8080 });
+
+// We will also provide a websocket for better communication
+wss.on('connection', function connection(ws) {
+  ws.on('message', function incoming(message) {
+      messageHandling(message, {
+          send : obj => ws.send(JSON.stringify(obj))
+      });
+  });
+
+  ws.send('something');
+});
+
+// Default route for webserver
 app.get('/api', function(req, res) {
     // Try to parse the request object
+    messageHandling(req.query['request'], res);
+});
+
+function messageHandling(requestObjectString, res) {
     let req_obj;
     try {
-        req_obj = JSON.parse(req.query['request']);
+        req_obj = JSON.parse(requestObjectString);
     } catch (e){
         // Catch errors
         res.send({
@@ -27,7 +45,7 @@ app.get('/api', function(req, res) {
         // Call method
         methods[method](req_obj, res);
     }
-});
+}
 
 // Dictionary containing all methods
 let methods = {
