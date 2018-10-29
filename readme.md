@@ -7,7 +7,7 @@ For communication a REST-API will be implemented.
 
 ## Documentation
 
-All requests take place over ```http://<server_url>/api?req=<json_object>```, where ```<json_object>``` is a JSON object that describes the individual request. 
+All requests take place over ```http://<server_url>/api?request=<json_object>```, where ```<json_object>``` is a JSON object that describes the individual request. 
 All responses will be in JSON format.
 Every request contains a ```fridge_id``` which determins the individual fridge, as well as a ```method``` field, which determines the intended function. 
 Since data is stored only in deltas, every delta contains a monotonically increasing ```state```. 
@@ -30,9 +30,6 @@ If no state is provided all updates will be transmitted.
 #### Result
 ```
 {
-    "fridge_id" : <fridge_id>,
-    "method" : "get_delta",
-    "prev_state" : <i>,
     "new_state" : <j>,
     "updates" : [
         <BLOB>,
@@ -55,7 +52,6 @@ Where ```j``` is the current ```state```, which should be stored locally.
 #### Result
 ```
 {
-    "fridge_id" : <fridge_id>,
     "error" : null
 }
 ```

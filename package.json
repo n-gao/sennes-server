@@ -1,0 +1,24 @@
+{
+  "name": "sennes_server",
+  "version": "1.0.0",
+  "description": "Server for the SenneS fridge attachment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n-gao/sennes-server.git"
+  },
+  "author": "SenneS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/n-gao/sennes-server/issues"
+  },
+  "homepage": "https://github.com/n-gao/sennes-server#readme",
+  "dependencies": {
+    "npm-watch": "^0.4.0",
+    "express": "^4.16.4"
+  }
+}
