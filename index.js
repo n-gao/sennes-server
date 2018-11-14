@@ -66,13 +66,8 @@ let methods = {
             state = 0;
         }
         // TODO: Change to actual database access
-        let response = {
-            new_state : state + 1,
-            updates : [
-                'ABC'
-            ],
-            error : null
-        }
+        let response = getUpdates(fridge_id, state);
+        response.error = null;
         res.send(response);
     },
 
@@ -95,8 +90,9 @@ let methods = {
             });
             return;
         }
-        // TODO: Saving
+        let state = addUpdate(fridge_id, update);
         res.send({
+            new_state : state,
             error : null
         });
     },
@@ -120,12 +116,34 @@ let methods = {
         for (var ind in barcodes) {
             result.info.push({
                 barcode : barcodes[ind],
-                // Do actual database access to receive informations.
-                info : {}
+                info : getBarcodeInfo(barcodes[ind])
             });
         }
         res.send(result);
     }
+}
+
+// This function should return the response for the get_updates method.
+function getUpdates(fridgeId, state) {
+    // TODO: Actual database access
+    return {
+        new_state : state + 1,
+        updates : [
+            'ABC',
+        ]
+    };
+}
+
+// This function saves the update to the database and should return the new state.
+function addUpdate(fridgeId, update) {
+    // TODO: Actual save the update and determine new state
+    return 1;
+}
+
+// This function should query the digit-eyes.com database for the given barcode
+function getBarcodeInfo(barcode) {
+    //TODO: Actually retrieve barcode information
+    return {};
 }
 
 // Start server at port 3000
