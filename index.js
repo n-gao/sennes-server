@@ -155,7 +155,7 @@ function getUpdates(fridgeId, state) {
 
   // items from the DB are stored in an array of dictionaries
   // Need to fix this function as it is returning all fridge IDs over the state
-  collection.find( { state: { $gt: currentState } }, { fridge_id: fridgeID } ).toArray(function(err, items) {
+  collection.find( { state: { $gt: currentState }, fridge_id: fridgeID } ).toArray(function(err, items) {
     if (err) throw err;
 
     var updates = items.map(i => i.encrpyted_update);
