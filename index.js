@@ -7,6 +7,7 @@ const wss = new WebSocket.Server({ port: 8080 });
 const request = require('request');
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
+const randomstring = require("randomstring");
 
 // Connection URL
 const url = "mongodb+srv://SenneS_Admin:SenneS2018@sennescluster-onimy.mongodb.net/SenneSDB";
@@ -136,22 +137,81 @@ let methods = {
     }
 }
 
+
+// Connect to the Database
+MongoClient.connect(url, { useNewUrlParser: true }, function(err, client) {
+  assert.equal(null, err);
+  console.log("Connected successfully to SenneSDB");
+
+  // Update the dbClient varaiable and use it make connections in functions
+  const dbClient = client.db(dbName);
+
+  // ******************************
+  // I had to make the function call from within this connection because I couldn't get it to work outside of it
+  // Having an issue where the getBarcodeInfo function would call before the DB connectione was made
+
+  var upc = "000054491472";
+  //getBarcodeInfo(dbClient, upc);
+
+  var fridgeID = "testFridge2";
+  var state = 3;
+  //addUpdate(dbClient, fridgeID, state, "sampleString");
+
+  getUpdates(dbClient, fridgeID, state);
+
+});
+
+
 // This function should return the response for the get_updates method.
 function getUpdates(fridgeId, state) {
-    // TODO: Actual database access
-    return {
-        new_state : state + 1,
-        updates : [
-            'ABC',
-        ]
-    };
+
+  // create the collection object for retrieving documents
+  const collection = dbClient.collection("Fridges");
+
+  // items from the DB are stored in an array of dictionaries
+  collection.find( { state: { $gt: currentState } }, { fridge_id: fridgeID } ).toArray(function(err, items) {
+    if (err) throw err;
+    console.log("Documents retrieved")
+
+    var updates = [];
+    for (var i = 0; i < items.length; i++) {
+      updates.push(items[i].string);
+    }
+    console.log(updates);
+
+    currentState++;
+    var result = { new_state: currentState, update: updates, error: null};
+    console.log(result);
+  });
+
+  // need to update and return state
 }
+
 
 // This function saves the update to the database and should return the new state.
 function addUpdate(fridgeId, update) {
-    // TODO: Actual save the update and determine new state
-    return 1;
+
+   // Create the collection object for inserting documents into Fridges database
+   const collection = dbClient.collection("Fridges");
+
+   // Generate a random string
+   // var randomstring = randomstring.generate(10);
+
+   // *******************************
+   // Not sure how to have a state counter tied to a fridge ID
+   state++;
+
+   // Create the document containing the ID, state and string
+   var update = { fridge_id: FridgeID , state: state, string: update };
+
+   // insert the document into the DB
+   collection.insertOne(update, function(err, res) {
+    if (err) throw err;
+    console.log("Document inserted");
+
+  });
 }
+
 
 // This function should query the digit-eyes.com database for the given barcode
 function getBarcodeInfo(barcode) {
@@ -179,7 +239,10 @@ function getBarcodeInfo(barcode) {
          if (err) throw err;
          console.log("Barcodes DB Updated");
 
-         // ***************************** 
+        var result = { barcode: barcode, info: barcodeInfo, error: "null"}
+        console.log(result);
+
+         // *****************************
          // I am not sure how to use callback so can't get it to return the barcodeInfo object
          //callback(barcodeInfo);
         });
