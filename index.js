@@ -4,6 +4,19 @@ const WebSocket = require('ws');
 const app = express();
 const wss = new WebSocket.Server({ port: 8080 });
 
+const request = require('request');
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+
+// Connection URL
+const url = "mongodb+srv://SenneS_Admin:SenneS2018@sennescluster-onimy.mongodb.net/SenneSDB";
+
+// Database name
+const dbName = "SenneSDB";
+
+// Create a global variable for database access
+var dbClient;
+
 // We will also provide a websocket for better communication
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
@@ -142,8 +155,35 @@ function addUpdate(fridgeId, update) {
 
 // This function should query the digit-eyes.com database for the given barcode
 function getBarcodeInfo(barcode) {
-    //TODO: Actually retrieve barcode information
-    return {};
+
+    // Query for UPCitemdb database
+    var query = "https://api.upcitemdb.com/prod/trial/lookup?upc="+barcode;
+
+    const options = {
+        url: query,
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Accept-Charset': 'utf-8'
+        }
+    };
+
+    // Parse the barcode information
+    request(options, function(err, res, body) {
+        var barcodeInfo = JSON.parse(body);
+        console.log(barcodeInfo);
+
+        // Store the returned JSON object in the Barcodes database
+        const collection = dbClient.collection("Barcodes");
+        collection.insertOne(barcodeInfo, function(err, res) {
+         if (err) throw err;
+         console.log("Barcodes DB Updated");
+
+         // ***************************** 
+         // I am not sure how to use callback so can't get it to return the barcodeInfo object
+         //callback(barcodeInfo);
+        });
+    });
 }
 
 // Start server at port 3000
