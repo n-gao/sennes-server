@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/n-gao/sennes-server#readme",
   "dependencies": {
+    "assert": "^1.4.1",
     "express": "^4.16.4",
+    "mongodb": "^3.1.10",
     "npm-watch": "^0.4.0",
+    "request": "^2.88.0",
     "ws": "^6.1.0"
   }
 }

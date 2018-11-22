@@ -1,0 +1,42 @@
+{
+    "return_message": "Success",
+    "upc_code": "0000090162602",
+    "usage": "Red Bull is a great energy drink to have by your side, and is appreciated world - wide  by top athletes, students, and in highly demanding professions as well as during long drives.For those who need WINGS for intense meetings or creative brainstorming sessions, on the field with teammates or competitors, or simply want to get the most out of life, a chilled can of Red Bull Energy Drink Gives You WINGS WHAT 'S INSIDE THE CAN: Caffeine was well known for its stimulating effects by ancient civilizations who consumed it from natural sources like tea, coffee, cacao beans & cola nuts.Taurine is an amino acid, naturally occurring in the human body and present in commonly consumed foods.It is involved in a wide range of biological processes.B - Group Vitamins are essential micronutrients that are required for maintaining normal body functions.Sugars are carbohydrates which are also contained in commonly consumed foods.Alpine Water: Naturally, water is the main ingredient of Red Bull.Served chilled.Best before: see base of can.",
+    "ingredients": "Water, Sucrose, Glucose, Acidifier Citric Acid, Carbon Dioxide, Taurine(0. 4 % ) Acidity Regulator(Sodium Carbonates, Magnesium Carbonate), Caffeine(0. 03 % ), Vitamins(Niacin, Pantothenic Acid, B6, B12), Flavourings, Colours(Caramel, Riboflavin)",
+    "uom": "250 ML",
+    "website": "www.tesco.com/",
+    "nutrition": "Typical Values Typical Values per 100 ml Energy 194 kJ (46 kcal) Fat 0 g of which Saturates 0 g Carbohydrates 11 g of which Sugars 11 g Protein 0 g Salt 0.1 g Vitamins: - Niacin 8 mg / 50 % NRV Pantothenic Acid 2 mg / 33 % NRV Vitamin B6 2 mg / 143 % NRV Vitamin B12 2 \u00b5g / 80 % NRV NRV = Nutrient Reference Value -",
+    "manufacturer": {
+        "contact": null,
+        "phone": null,
+        "country": null,
+        "company": "Red Bull Company Limited",
+        "city": null,
+        "state": null,
+        "address": null,
+        "postal_code": null,
+        "address2": null
+    },
+    "language": "en",
+    "product_web_page": "https://www.tesco.com/groceries/en-GB/products/259153617",
+    "gcp": {
+        "contact": null,
+        "phone": null,
+        "country": "MX",
+        "gcp": "0009016",
+        "company": "Licores Veracruz S.A. De C.V.",
+        "city": "Cordoba, Veracruz ",
+        "postal_code": null,
+        "address": "K.M. 341.5",
+        "state": null,
+        "fax": null,
+        "address2": "Carreretera Cordoba Veracruz",
+        "gln": "9016000004"
+    },
+    "return_code": "000",
+    "description": "Red Bull Energy Drink 250ML",
+    "brand": "Red Bull",
+    "gcp_gcp": "9016",
+    "image": "http://www.canmuseum.com/Staging/Images/Cans/80496.jpg",
+    "formattedNutrition": null
+}
