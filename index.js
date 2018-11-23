@@ -226,7 +226,19 @@ function getBarcodeInfo(barcode, callback) {
 
     // Query for UPCitemdb database
     // let query = "https://api.upcitemdb.com/prod/trial/lookup?upc=" + barcode;
+    const collection = dbClient.collection("Barcodes");
+    collection.find({
+        code : barcode
+    }).limit(1).toArray((err, item) => {
+        if (item == undefined) {
+            queryOpenFoodFacts(barcode, callback);
+        } else {
+            callback(item);
+        }
+    });
+}
 
+function queryOpenFoodFacts(barcode, callback) {
     // Query Open Food Facts database
     let query = `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`;
 
@@ -250,8 +262,8 @@ function getBarcodeInfo(barcode, callback) {
 
         // Check if query has been successful
         if (barcodeInfo.status == 1) {
-            // Store the returned JSON object in the Barcodes database
             const collection = dbClient.collection("Barcodes");
+            // Store the returned JSON object in the Barcodes database
             collection.insertOne(item, function (err, res) {
                 if (err) throw err;
     
