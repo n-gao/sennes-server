@@ -172,15 +172,22 @@ function getUpdates(fridgeId, state, callback) {
 
         var updates = items.map(i => i.encrpyted_update);
 
-        var result = {
-            new_state: updates.length > 0 ? Math.max(...items.map(i => i.state)) : 0,
-            updates: updates,
-            error: null
-        };
-        console.log(result);
+        collection.find({
+            fridge_id: fridgeId
+        }).sort({
+            state: -1
+        }).limit(1).toArray(function (err, lastUpdate) {
+            var result = {
+                new_state: lastUpdate.state,
+                updates: updates,
+                error: null
+            };
 
-        if (callback != undefined)
-            callback(result);
+            console.log(result);
+    
+            if (callback != undefined)
+                callback(result);
+        });
     });
 }
 
