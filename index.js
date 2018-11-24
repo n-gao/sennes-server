@@ -172,13 +172,14 @@ function getUpdates(fridgeId, state, callback) {
 
         var updates = items.map(i => i.encrpyted_update);
 
+        // Getting highest state
         collection.find({
-            fridge_id: fridgeId
+            fridge_id: fridgeId.toString()
         }).sort({
             state: -1
         }).limit(1).toArray(function (err, lastUpdate) {
             var result = {
-                new_state: lastUpdate.state,
+                new_state: lastUpdate != undefined && lastUpdate.length > 0 ? lastUpdate[0].state : 0,
                 updates: updates,
                 error: null
             };
@@ -199,7 +200,7 @@ function addUpdate(fridgeId, update, callback) {
 
     // Query the database to find the current highest state for this fridge
     collection.find({
-        fridge_id: fridgeId
+        fridge_id: fridgeId.toString()
     }).sort({
         state: -1
     }).limit(1).toArray(function (err, maxState) {
@@ -213,7 +214,7 @@ function addUpdate(fridgeId, update, callback) {
 
         // Create the document containing the ID, state and string
         let fridgeUpdate = {
-            fridge_id: fridgeId,
+            fridge_id: fridgeId.toString(),
             state: newState,
             encrpyted_update: update
         };
