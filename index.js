@@ -173,8 +173,8 @@ function getUpdates(fridgeId, state, callback) {
         var updates = items.map(i => i.encrpyted_update);
 
         var result = {
-            new_state: Math.max(...items.map(i => i.state)),
-            update: updates,
+            new_state: updates.length > 0 ? Math.max(...items.map(i => i.state)) : 0,
+            updates: updates,
             error: null
         };
         console.log(result);
