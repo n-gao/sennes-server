@@ -237,11 +237,11 @@ function getBarcodeInfo(barcode, callback) {
     const collection = dbClient.collection("Barcodes");
     collection.find({
         code : barcode
-    }).limit(1).toArray((err, item) => {
-        if (item == undefined) {
+    }).limit(1).toArray((err, items) => {
+        if (items == undefined || items.length == 0) {
             queryOpenFoodFacts(barcode, callback);
         } else {
-            callback(item);
+            callback(items[0]);
         }
     });
 }
@@ -249,6 +249,8 @@ function getBarcodeInfo(barcode, callback) {
 function queryOpenFoodFacts(barcode, callback) {
     // Query Open Food Facts database
     let query = `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`;
+
+    console.log(query)
 
     const options = {
         url: query,
@@ -273,8 +275,6 @@ function queryOpenFoodFacts(barcode, callback) {
             const collection = dbClient.collection("Barcodes");
             // Store the returned JSON object in the Barcodes database
             collection.insertOne(item, function (err, res) {
-                if (err) throw err;
-    
                 if (callback != undefined)
                     callback(item);
             });
